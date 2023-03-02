@@ -1,9 +1,17 @@
 var db = require('../db');
 
 module.exports = {
-  getAll: function () {
-    let getQuery = 'SELECT * FROM `messages`';
-    connection.query(getQuery, () => {});
+  getAll: function (responseCallback) {
+    let getQuery = 'SELECT * FROM messages';
+    db.connection.query(getQuery, (getErr, getResults) => {
+      if (getErr) {
+        console.log(`Error getting messages: ${getErr}`);
+        responseCallback(getErr, []);
+      } else {
+        console.log(`Success getting messages: ${JSON.stringify(getResults)}`);
+        responseCallback(null, getResults);
+      }
+    });
   }, // a function which produces all the messages
 
   create: function (message, callback) {

@@ -67,6 +67,10 @@ describe('Persistent Node Chat Server', () => {
     // Let's insert a message into the db
     const queryString = 'SELECT * FROM messages';
     const queryArgs = [];
+
+    const username = 'Valjean';
+    const message = 'In mercy\'s name, three days is all I need.';
+    const roomname = 'Hello';
     /* TODO: The exact query string and query args to use here
      * depend on the schema you design, so I'll leave them up to you. */
     dbConnection.query(queryString, queryArgs, (err) => {
@@ -78,8 +82,35 @@ describe('Persistent Node Chat Server', () => {
       axios.get(`${API_URL}/messages`)
         .then((response) => {
           const messageLog = response.data;
-          expect(messageLog[0].text).toEqual(message);
-          expect(messageLog[0].roomname).toEqual(roomname);
+          expect(messageLog[0].TextMessage).toEqual(message);
+          expect(messageLog[0].Room).toEqual(roomname);
+          done();
+        })
+        .catch((err) => {
+          throw err;
+        });
+    });
+  });
+
+  it('Should output all users from the DB', (done) => {
+    // Let's insert a message into the db
+    const queryString = 'SELECT * FROM users';
+    const queryArgs = [];
+
+    const username = 'Valjean';
+    /* TODO: The exact query string and query args to use here
+     * depend on the schema you design, so I'll leave them up to you. */
+    dbConnection.query(queryString, queryArgs, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      // Now query the Node chat server and see if it returns the message we just inserted:
+      axios.get(`${API_URL}/users`)
+        .then((response) => {
+          const userLog = response.data;
+          expect(userLog[0].UserName).toEqual(username);
+          //expect(userLog[0].Room).toEqual(roomname);
           done();
         })
         .catch((err) => {

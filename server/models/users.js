@@ -1,11 +1,23 @@
 var db = require('../db');
 
 module.exports = {
-  getAll: function () {},
+  getAll: function (callback) {
+    let requestQuery = 'SELECT * FROM users';
+
+    db.connection.query(requestQuery, (err, results) => {
+      if (err) {
+        console.log(`Error getting users: ${err}`);
+        callback(err);
+      } else {
+        console.log(`Success getting users: ${results}`);
+        callback(null, results);
+      }
+    });
+  },
   create: function (username, callback) {
     // check if username in table already
     // let qGet = `SELECT UserName FROM users WHERE UserName=${username}`;
-    let qGet = 'SELECT UserName FROM users';
+    let qGet = `SELECT UserName FROM users WHERE UserName='${username}'`;
 
     db.connection.query(qGet, (err, results) => {
       if (err) {
