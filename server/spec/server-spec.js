@@ -16,7 +16,7 @@ describe('Persistent Node Chat Server', () => {
   beforeAll((done) => {
     dbConnection.connect();
 
-    const tablename = 'messages'; // TODO: fill this out
+    const tablename = 'Messages'; // TODO: fill this out
 
     /* Empty the db table before all tests so that multiple tests
      * (or repeated runs of the tests)  will not fail when they should be passing
@@ -43,7 +43,7 @@ describe('Persistent Node Chat Server', () => {
 
         /* TODO: You might have to change this test to get all the data from
          * your message table, since this is schema-dependent. */
-        const queryString = 'SELECT * FROM messages';
+        const queryString = 'SELECT * FROM Messages';
         const queryArgs = [];
 
         dbConnection.query(queryString, queryArgs, (err, results) => {
@@ -65,7 +65,7 @@ describe('Persistent Node Chat Server', () => {
 
   it('Should output all messages from the DB', (done) => {
     // Let's insert a message into the db
-    const queryString = 'SELECT * FROM messages';
+    const queryString = 'SELECT * FROM Messages';
     const queryArgs = [];
 
     const username = 'Valjean';
@@ -94,7 +94,7 @@ describe('Persistent Node Chat Server', () => {
 
   it('Should output all users from the DB', (done) => {
     // Let's insert a message into the db
-    const queryString = 'SELECT * FROM users';
+    const queryString = 'SELECT * FROM Users';
     const queryArgs = [];
 
     const username = 'Valjean';
